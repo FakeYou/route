@@ -1,0 +1,28 @@
+{
+  "name": "route",
+  "version": "1.0.0",
+  "description": "Route",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FakeYou/route.git"
+  },
+  "author": "Andre Nanninga <ag.nanninga@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FakeYou/route/issues"
+  },
+  "homepage": "https://github.com/FakeYou/route#readme",
+  "dependencies": {
+    "d3": "3.5.17",
+    "jsdom": "^9.4.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-plugin-transform-remove-strict-mode": "0.0.2",
+    "babel-preset-es2015": "^6.9.0"
+  }
+}
