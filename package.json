@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/FakeYou/route#readme",
   "dependencies": {
+    "axios": "^0.13.0",
     "d3": "3.5.17",
+    "d3-plugins-dist": "^3.2.0",
     "jsdom": "^9.4.1"
   },
   "devDependencies": {

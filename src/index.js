@@ -1,9 +1,14 @@
-import { createWindow } from './window';
+import fs from 'fs';
+
+import { createWindow, getWindow } from './window';
+import { drawMap } from './map';
 
 createWindow()
-	.then(window => {
-		const svg = window.d3.select('svg');
+	.then(() => drawMap())
+	.then(() => {
+		const window = getWindow();
+		const html = window.d3.select('.container').html();
 
-		console.log(window.d3.select('.container').html());
+		fs.writeFileSync('./tmp/map.html', html);
 	})
 	.catch(console.error.bind(console));
