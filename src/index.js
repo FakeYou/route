@@ -1,14 +1,16 @@
 import fs from 'fs';
 
-import { createWindow, getWindow } from './window';
-import { drawMap } from './map';
+import { createWindow, getHtml } from './window';
+import { drawMap, drawRoute, GPX } from './map';
+
+const route = fs.readFileSync('./data/vilnius_halfmarathon_20140914T0830.gpx', 'utf8');
 
 createWindow()
-	.then(() => drawMap())
+	.then(() => drawRoute(route, GPX))
 	.then(() => {
-		const window = getWindow();
-		const html = window.d3.select('.container').html();
+		const html = getHtml();
 
+		console.log('writing html to file');
 		fs.writeFileSync('./tmp/map.html', html);
 	})
 	.catch(console.error.bind(console));
