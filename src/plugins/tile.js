@@ -1,7 +1,7 @@
 import d3 from 'd3';
 
 export default function() {
-  var size = [960, 500],
+  var size = [256, 256],
       scale = 256,
       translate = [size[0] / 2, size[1] / 2],
       zoomDelta = 0;

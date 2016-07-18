@@ -42,7 +42,6 @@ function drawTiles(svg, bounds) {
 	const scale = projection.scale() * 2 * Math.PI;
 
 	const tile = geotile().size([ width, height ]);
-	const path = d3.geo.path().projection(projection);
 	const tiles = tile.scale(scale).translate(projection([0, 0]));
 
 	return new Promise((resolve, reject) => {
@@ -51,12 +50,13 @@ function drawTiles(svg, bounds) {
 		svg.selectAll('g')
 			.data(tiles)
 			.enter().append('g')
-				.each(function(d) {
+				.each(function(d, i) {
+					const path = d3.geo.path().projection(projection);
 					promises.push(drawTile.call(this, d, path));
 				});
 
 		Promise.all(promises)
-			.then(() => {console.log('resolved'); resolve()})
+			.then(resolve)
 			.catch(reject);
 	});
 }
@@ -81,7 +81,7 @@ function drawTile(d, path) {
 							return;
 						}
 
-						feature.layer = layer;
+						feature.properties.layer = layer;
 						features.push(feature);
 					});
 				});
@@ -89,9 +89,16 @@ function drawTile(d, path) {
 				g.selectAll('path')
 					.data(features.sort((a, b) => a.properties.sort_key - b.properties.sort_key))
 				.enter().append('path')
-					.attr('class', d => d.properties.kind)
-					.attr('d', path);
+					.attr('class', d => {
+						let { kind = '', boundary } = d.properties;
 
+						if(boundary === 'yes') {
+							kind = `${kind}_boundary`;
+						}
+
+						return `${kind}`;
+					})
+					.attr('d', path);
 				resolve();
 			})
 			.catch(reject);
@@ -105,7 +112,8 @@ function getProjection(bounds, width, height) {
 	return d3.geo.mercator()
 		.center(center)
 		.scale(scale)
-		.translate([width / 2, height / 2]);
+		.translate([width / 2, height / 2])
+		.precision(0);
 }
 
 function getCenter(bounds) {
@@ -116,7 +124,7 @@ function getCenter(bounds) {
 }
 
 function getScale(bounds, width, height) {
-	return 40 / Math.max(
+	return 160 / Math.max(
 		(bounds[1][0] - bounds[0][0]) / width,
 		(bounds[1][1] - bounds[0][1]) / height
 	);

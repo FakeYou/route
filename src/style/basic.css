@@ -21,3 +21,4 @@ path {
 .buildings-layer { stroke: #987284; stroke-width: 0.15px; }
 .park, .nature_reserve, .wood, .protected_land { fill: #88D18A; stroke: #88D18A; stroke-width: 0.5px; }
 .rail { stroke: #503D3F; stroke-width: 0.5px; }
+.building { fill: grey; }
